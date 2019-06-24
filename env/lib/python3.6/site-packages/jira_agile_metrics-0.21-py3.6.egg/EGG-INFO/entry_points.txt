@@ -1,0 +1,3 @@
+[console_scripts]
+jira-agile-metrics = jira_agile_metrics.cli:main
+
