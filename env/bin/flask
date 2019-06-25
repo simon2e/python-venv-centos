@@ -1,4 +1,4 @@
-#!/home/stuohey/dev/python-env-centos/env/bin/python
+#!${HOME}/python-env-centos/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'Flask==1.0.3','console_scripts','flask'
 __requires__ = 'Flask==1.0.3'
 import re

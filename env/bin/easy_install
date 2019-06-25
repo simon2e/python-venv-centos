@@ -1,4 +1,4 @@
-#!/home/stuohey/dev/python-env-centos/env/bin/python
+#!${HOME}/python-env-centos/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'setuptools==40.6.2','console_scripts','easy_install'
 __requires__ = 'setuptools==40.6.2'
 import re
