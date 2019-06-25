@@ -1,4 +1,4 @@
-#!${HOME}/python-env-centos/env/bin/python
+#!${bamboo_build_working_directory}/python-env-centos/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'Flask==1.0.3','console_scripts','flask'
 __requires__ = 'Flask==1.0.3'
 import re

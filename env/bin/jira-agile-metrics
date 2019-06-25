@@ -1,4 +1,4 @@
-#!${HOME}/python-env-centos/env/bin/python
+#!${bamboo_build_working_directory}/python-env-centos/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'jira-agile-metrics==0.21','console_scripts','jira-agile-metrics'
 __requires__ = 'jira-agile-metrics==0.21'
 import re
