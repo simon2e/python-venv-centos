@@ -1,4 +1,4 @@
-#!${bamboo_build_working_directory}/python-env-centos/env/bin/python
+#!${bamboo_build_working_directory}/python-venv-centos/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'chardet==3.0.4','console_scripts','chardetect'
 __requires__ = 'chardet==3.0.4'
 import re

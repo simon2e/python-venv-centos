@@ -1,4 +1,4 @@
-#!${bamboo_build_working_directory}/python-env-centos/env/bin/python
+#!${bamboo_build_working_directory}/python-venv-centos/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'jira==2.0.0','console_scripts','jirashell'
 __requires__ = 'jira==2.0.0'
 import re
