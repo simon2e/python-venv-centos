@@ -1,13 +1,13 @@
 # Python Virtual Environment for TICEE Bamboo agents (RHEL 7/Centos 7)
 
-This repo holds a fully standalone python 3.6 virtual environment for executing jobs requiring python3 on Optimus Bamboo shared agents. A "standard" python3 virtual still has some dependencies on the python3 installation used to create it.
+This repo holds a fully standalone python 3.6 virtual environment for executing jobs requiring python3 on Optimus Bamboo shared agents. A "standard" python3 virtual environment still has some dependencies on the python3 installation used to create it.
 
 Differences to a "standard" python3 virtual environment:
 
 - made using `--copies` option rather than the typical symlinks on linux
 - includes libpython library
 - includes lib/python3.6 folders
-- include activate_ld to set LD_LIBRARY_PATH and PYTHONPATH
+- includes activate_ld (modified from activate script) to set LD_LIBRARY_PATH and PYTHONPATH
 
 If running under Bamboo shared agent the virtual environment must be activated by executing:  
 
