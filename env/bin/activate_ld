@@ -38,16 +38,28 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-#VIRTUAL_ENV="${bamboo_build_working_directory}/python-venv-centos/env"
-VIRTUAL_ENV="/home/stuohey/dev/python-venv-centos/env"
+# check for running in bamboo build server or not
+if [ -v bamboo_build_working_directory ] ; then
+    VIRTUAL_ENV="${bamboo_build_working_directory}/python-venv-centos/env"
+else
+    VIRTUAL_ENV="${HOME}/dev/python-venv-centos/env"
+fi
 export VIRTUAL_ENV
+# a few basic checks for logging helpfulness
+if [ ! -x "${VIRTUAL_ENV}/bin/python3" ] ; then
+    echo "Warning: can't locate python3 binary at ${VIRTUAL_ENV}/bin/python3"
+fi
+if [ ! -x "${VIRTUAL_ENV}/bin/jira-agile-metrics" ] ; then
+    echo "Warning: can't locate jira-agile-metrics binary at ${VIRTUAL_ENV}/bin/jira-agile-metrics"
+fi
 
 _OLD_VIRTUAL_PATH="$PATH"
 PATH="$VIRTUAL_ENV/bin:$PATH"
 export PATH
 
+# added LD_LIBRARY_PATH to locate libpython3.6m.so.1.0 for python3 launch
 _OLD_VIRTUAL_LLPATH="$LD_LIBRARY_PATH"
-LD_LIBRARY_PATH="$VIRTUAL_ENV/lib64:$LD_LIBRARY_PATH"
+LD_LIBRARY_PATH="${VIRTUAL_ENV}/lib64:$LD_LIBRARY_PATH"
 export LD_LIBRARY_PATH
 
 # unset PYTHONHOME if set
@@ -57,6 +69,10 @@ if [ -n "${PYTHONHOME:-}" ] ; then
     _OLD_VIRTUAL_PYTHONHOME="${PYTHONHOME:-}"
     unset PYTHONHOME
 fi
+
+# added PYTHONHOME and PYTHONPATH for full standalone operation
+export PYTHONHOME=${VIRTUAL_ENV}/lib/python3.6
+export PYTHONPATH=${VIRTUAL_ENV}/lib/python3.6:${VIRTUAL_ENV}/lib/python3.6/site-packages:${VIRTUAL_ENV}/lib/python3.6/lib-dynload
 
 if [ -z "${VIRTUAL_ENV_DISABLE_PROMPT:-}" ] ; then
     _OLD_VIRTUAL_PS1="${PS1:-}"
