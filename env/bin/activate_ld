@@ -66,9 +66,6 @@ if [ -v bamboo_build_working_directory ] ; then
     sedcmd="s#${placeholder}#${bamboo_build_working_directory}#"
     echo "----- updating paths from ${placeholder} to ${bamboo_build_working_directory} - filelist:"
     grep -d skip -l -e ${placeholder} *
-#    echo "----- - echoing grep/sed command:"
-#    echo grep -d skip -l -e ${placeholder} \* \| xargs echo "${sedcmd}"
-#    echo "----- running that command:"
     grep -d skip -l -e ${placeholder} * | xargs sed -i "${sedcmd}"
     popd
 else

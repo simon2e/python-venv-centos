@@ -33,7 +33,6 @@ This will set the relevant environment variables so that python will only resolv
     ```
     placeholder='/home/stuohey/dev'       <==== change this
     sedcmd="s#${placeholder}#${bamboo_build_working_directory}#"
+    ```
 
-    grep -d skip -l -e ${placeholder} *
-
-2. Place a copy of activate_ld in the env/bin folder
+1. Place a copy of  the updated activate_ld in the env/bin folder
