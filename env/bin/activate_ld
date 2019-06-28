@@ -1,6 +1,6 @@
 # This file must be used with "source bin/activate" *from bash*
 # you cannot run it directly
-# modified to also set LD_LIBRARY_PATH
+# modified to also set LD_LIBRARY_PATH, PYTHONPATH, and fix hard-wired #! strings
 
 deactivate () {
     # reset old environment variables
@@ -53,9 +53,33 @@ if [ ! -x "${VIRTUAL_ENV}/bin/jira-agile-metrics" ] ; then
     echo "Warning: can't locate jira-agile-metrics binary at ${VIRTUAL_ENV}/bin/jira-agile-metrics"
 fi
 
-_OLD_VIRTUAL_PATH="$PATH"
-PATH="$VIRTUAL_ENV/bin:$PATH"
-export PATH
+# check for running in bamboo build server or not, fix hardwired #! paths
+if [ -v bamboo_build_working_directory ] ; then
+    VIRTUAL_ENV="${bamboo_build_working_directory}/python-venv-centos/env"
+    scriptdir=$(dirname "$(readlink -f "$0")")
+    echo "Running #! path fixes in $scriptdir"
+    pushd $scriptdir
+    # set $placeholder to hard-wired path that needs replacing
+    placeholder='/home/stuohey/dev'
+    sedcmd="s#${placeholder}#${bamboo_build_working_directory}#"
+    echo "----- updating paths from ${placeholder} to ${bamboo_build_working_directory} - filelist:"
+    grep -d skip -l -e ${placeholder} *
+#    echo "----- - echoing grep/sed command:"
+#    echo grep -d skip -l -e ${placeholder} \* \| xargs echo "${sedcmd}"
+#    echo "----- running that command:"
+    grep -d skip -l -e ${placeholder} * | xargs sed -i "${sedcmd}"
+    popd
+else
+    VIRTUAL_ENV="${HOME}/dev/python-venv-centos/env"
+fi
+export VIRTUAL_ENV
+# a few basic checks for logging helpfulness
+if [ ! -x "${VIRTUAL_ENV}/bin/python3" ] ; then
+    echo "Warning: can't locate python3 binary at ${VIRTUAL_ENV}/bin/python3"
+fi
+if [ ! -x "${VIRTUAL_ENV}/bin/jira-agile-metrics" ] ; then
+    echo "Warning: can't locate jira-agile-metrics binary at ${VIRTUAL_ENV}/bin/jira-agile-metrics"
+fi
 
 # added LD_LIBRARY_PATH to locate libpython3.6m.so.1.0 for python3 launch
 _OLD_VIRTUAL_LLPATH="$LD_LIBRARY_PATH"
