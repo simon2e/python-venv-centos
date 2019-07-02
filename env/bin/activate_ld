@@ -57,8 +57,8 @@ if [ ! -x "${VIRTUAL_ENV}/bin/jira-agile-metrics" ] ; then
 fi
 
 # fix hardwired #! paths
-# set OLDDEVBASE to specify path to be fixed
-placeholder="${OLDDEVBASE:-/home/stuohey/dev}"
+# set OLDDEVBASE to specify path to be fixed, default to $HOME/dev
+placeholder="${OLDDEVBASE:-$HOME}/dev}"
 if [ "$placeholder" != "$DEVBASE" ] ; then
     pushd ${VIRTUAL_ENV}/bin > /dev/null
     filelist="$(grep -d skip -l -e ${placeholder}\/ *)"
