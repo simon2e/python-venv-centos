@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="${bamboo_build_working_directory}/python-venv-centos/env"
+VIRTUAL_ENV="/home/stuohey/dev/python-env-centos/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
