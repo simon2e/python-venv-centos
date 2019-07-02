@@ -7,7 +7,7 @@ Differences to a "standard" python3 virtual environment:
 - made using `--copies` option rather than the typical symlinks on linux
 - includes libpython library
 - includes lib/python3.6 folders
-- includes activate_ld (modified from activate script) to set LD_LIBRARY_PATH and PYTHONPATH
+- includes activate_ld (modified from activate script) to set LD_LIBRARY_PATH and PYTHONPATH, and adjust hard-wired #! paths in venv scripts
 
 If running under Bamboo shared agent the virtual environment must be activated by executing:  
 

@@ -1,6 +1,7 @@
 # This file must be used with "source bin/activate" *from bash*
 # you cannot run it directly
-# modified to also set LD_LIBRARY_PATH, PYTHONPATH, and fix hard-wired #! strings
+# modified to also set LD_LIBRARY_PATH, PYTHONPATH, PYTHONHOME and
+# fix up hard-wired virtual environment #! paths
 
 deactivate () {
     # reset old environment variables
@@ -42,7 +43,7 @@ deactivate nondestructive
 if [ -v bamboo_build_working_directory ] ; then
     VIRTUAL_ENV="${bamboo_build_working_directory}/python-venv-centos/env"
 else
-    VIRTUAL_ENV="${HOME}/dev/python-venv-centos/env"
+    VIRTUAL_ENV="${DEV:-$HOME/dev}/python-venv-centos/env"
 fi
 export VIRTUAL_ENV
 
