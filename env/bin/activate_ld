@@ -39,43 +39,42 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-# check for running in bamboo build server or not, check or set DEVBASE accordingly
-if [ -v bamboo_build_working_directory ] ; then
-    DEVBASE="${bamboo_build_working_directory}"
-else
-    DEVBASE="${DEVBASE:-$HOME/dev}"
-fi
-VIRTUAL_ENV="${DEVBASE}/python-venv-centos/env"
+# work out where we're running from, adjust environment and hard-coded paths accordingly
+scriptfile="$(readlink --canonicalize --no-newline "$BASH_SOURCE")"
+scriptdir="$(dirname "$scriptfile")"
+basedir="$(dirname $(dirname "$scriptdir"))"
+echo "running activation script: $scriptfile"
+# use virtual env pip to check #! paths
+pipbangstr=$(head -1 $scriptdir/pip)
+pippath="$(dirname ${pipbangstr#\#\!})"
+pipbase="$(dirname $(dirname "$pippath"))"
+
+VIRTUAL_ENV="${basedir}/env"
 export VIRTUAL_ENV
+echo "activating python virtual environment: $VIRTUAL_ENV"
 
 # a few basic checks for logging helpfulness
 if [ ! -x "${VIRTUAL_ENV}/bin/python3" ] ; then
     echo "Warning: can't locate python3 binary at ${VIRTUAL_ENV}/bin/python3"
+    echo "Stopping."
+    return 1
 fi
 if [ ! -x "${VIRTUAL_ENV}/bin/jira-agile-metrics" ] ; then
     echo "Warning: can't locate jira-agile-metrics binary at ${VIRTUAL_ENV}/bin/jira-agile-metrics"
+    echo "Stopping."
+    return 1
 fi
 
-# fix hardwired #! paths
-# set OLDDEVBASE to specify path to be fixed, default to $HOME/dev
-placeholder="${OLDDEVBASE:-$HOME}/dev}"
-if [ "$placeholder" != "$DEVBASE" ] ; then
+# fix hardwired #! paths if required
+if [ "$pipbase" != "$basedir" ] ; then
     pushd ${VIRTUAL_ENV}/bin > /dev/null
-    filelist="$(grep -d skip -l -e ${placeholder}\/ *)"
-    sedcmd="1,1s#${placeholder}/#${DEVBASE}/#"
+    filelist="$(grep -d skip -l -e \#\!${pipbase}\/ *)"
+    sedcmd="1,1s#${pipbase}/#${basedir}/#"
     for f in $filelist ; do
-        echo "----- updating $f from ${placeholder}/ to ${DEVBASE}/"
+        echo "----- updating $f from ${pipbase}/ to ${basedir}/"
         sed -i "${sedcmd}" $f
     done
     popd > /dev/null
-fi
-
-# a few basic checks for logging helpfulness
-if [ ! -x "${VIRTUAL_ENV}/bin/python3" ] ; then
-    echo "Warning: can't locate python3 binary at ${VIRTUAL_ENV}/bin/python3"
-fi
-if [ ! -x "${VIRTUAL_ENV}/bin/jira-agile-metrics" ] ; then
-    echo "Warning: can't locate jira-agile-metrics binary at ${VIRTUAL_ENV}/bin/jira-agile-metrics"
 fi
 
 # added LD_LIBRARY_PATH to locate libpython3.6m.so.1.0 for python3 launch
