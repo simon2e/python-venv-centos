@@ -29,10 +29,6 @@ This will set the relevant environment variables so that python will only resolv
     $ cd env/lib
     $ ln -s libpython3.6m.so.1.0 libpython3.6m.so
     ```
-1. Modify activate_ld around line 65 and update **placeholder** variable definition to match the hardwired virtual environment path to replace in #! scripts:
-    ```
-    placeholder='/home/stuohey/dev'       <==== change this
-    sedcmd="s#${placeholder}#${bamboo_build_working_directory}#"
-    ```
-
-1. Place a copy of  the updated activate_ld in the env/bin folder
+1. Install a copy of activate_ld in the env/bin folder
+1. mv env/bin/activate env/bin/activate-ORIG
+1. (cd env/bin; ln -s activate_ld activate) 
