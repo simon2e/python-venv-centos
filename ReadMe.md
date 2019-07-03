@@ -30,5 +30,8 @@ This will set the relevant environment variables so that python will only resolv
     $ ln -s libpython3.6m.so.1.0 libpython3.6m.so
     ```
 1. Install a copy of activate_ld in the env/bin folder
-1. mv env/bin/activate env/bin/activate-ORIG
-1. (cd env/bin; ln -s activate_ld activate) 
+    ```
+    mv env/bin/activate env/bin/activate-ORIG
+    (cd env/bin; ln -s activate_ld activate) 
+    ```
+    
